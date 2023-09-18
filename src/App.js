@@ -14,13 +14,13 @@ function App() {
   useEffect(() => {
     // Load default links
     setLinks(defaultLinks);
-
+  
     // Load additional links from localStorage
     const storedLinks = JSON.parse(localStorage.getItem('links'));
     if (storedLinks) {
-      setLinks([...defaultLinks, ...storedLinks]);
+      setLinks(storedLinks);
     }
-  }, []);
+  }, []);  
 
   useEffect(() => {
     localStorage.setItem('links', JSON.stringify(links));
