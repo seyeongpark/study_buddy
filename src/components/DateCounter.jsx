@@ -6,9 +6,10 @@ import { EditIcon } from '@chakra-ui/icons';
 function DateCounter() {
   const [inputDate, setInputDate] = useState('');
   const [inputEventName, setInputEventName] = useState('');
-  const [counterType, setCounterType] = useState('future');
+  const [inputEventType, setInputEventType] = useState('');
   const [result, setResult] = useState('Happy Day :)');
   const [storedInputEventName, setStoredInputEventName] = useState('');
+  const [storedInputEventType, setStoredInputEventType] = useState('');
 
   const { onOpen, onClose, isOpen } = useDisclosure();
   const firstFieldRef = React.useRef(null);
@@ -22,28 +23,36 @@ function DateCounter() {
   };
 
   const handleCounterTypeChange = (value) => {
-    setCounterType(value);
+    setInputEventType(value);
   };
 
   useEffect(() => {
     // Set initial state values from localStorage
     const storedEventName = localStorage.getItem('inputEventName');
     const storedDate = localStorage.getItem('inputDate');
+    const storedEventType = localStorage.getItem('inputEventType');
+  
     if (storedEventName) {
       setInputEventName(storedEventName);
-      setStoredInputEventName(storedEventName); // Set the stored inputEventName as well
+      setStoredInputEventName(storedEventName);
+      setStoredInputEventType(storedEventType);
     }
     if (storedDate) {
       setInputDate(storedDate);
     }
+    if (storedEventType) {
+      setInputEventType(storedEventType);
+    }
   }, []);
+  
 
   useEffect(() => {
     // Store inputEventName and inputDate in localStorage whenever they change
     localStorage.setItem('inputEventName', inputEventName);
     localStorage.setItem('inputDate', inputDate);
+    localStorage.setItem('inputEventType', inputEventType);
     calculateDateDifference();
-  }, [inputEventName, inputDate]);
+  }, [inputEventName, inputDate, inputEventType]);
 
   const calculateDateDifference = () => {
     if(inputDate) {
@@ -52,7 +61,7 @@ function DateCounter() {
       const timeDifference = selectedDate - currentDate;
       const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-      if (counterType === 'future') {
+      if (inputEventType === 'future') {
         if (daysDifference < 0) {
           setResult(`Date in the past ${daysDifference * -1} day(s)`);
         } else if (daysDifference === 0) {
@@ -60,7 +69,7 @@ function DateCounter() {
         } else {
           setResult(`Day-${daysDifference}`);
         }
-      } else if (counterType === 'ongoing') {
+      } else if (inputEventType === 'ongoing') {
         if (daysDifference < 0) {
           setResult(`Day ${daysDifference * -1}`);
         } else if (daysDifference === 0) {
@@ -102,11 +111,13 @@ function DateCounter() {
             onCancel={onClose}
             inputEventName={inputEventName}
             handleEventNameChange={handleEventNameChange}
-            counterType={counterType}
+            counterType={storedInputEventType}
             handleCounterTypeChange={handleCounterTypeChange}
             inputDate={inputDate}
             handleInputChange={handleInputChange}
             calculateDateDifference={calculateDateDifference}
+            storedInputEventType={storedInputEventType}
+            inputEventType={inputEventType}
           />
         </PopoverContent>
       </Popover>
@@ -129,11 +140,12 @@ const Form = ({
   onCancel,
   inputEventName,
   handleEventNameChange,
-  counterType,
+  inputEventType,
   handleCounterTypeChange,
   inputDate,
   handleInputChange,
   calculateDateDifference,
+  storedInputEventType
 }) => {
   return (
     <Stack spacing={4}>
@@ -144,7 +156,7 @@ const Form = ({
         value={inputEventName}
         onChange={handleEventNameChange}
       />
-      <RadioGroup value={counterType} onChange={handleCounterTypeChange}>
+      <RadioGroup value={inputEventType} onChange={handleCounterTypeChange}>
         <Stack spacing={5} direction='row'>
           <Radio colorScheme='green' value='future'>
             Future
@@ -162,9 +174,6 @@ const Form = ({
         onChange={handleInputChange}
       />
       <ButtonGroup display='flex' justifyContent='flex-end'>
-        {/* <Button variant='outline' onClick={onCancel}>
-          Cancel
-        </Button> */}
         <Button colorScheme='teal' onClick={onCancel}>
           Close
         </Button>
