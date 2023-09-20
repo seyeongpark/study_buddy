@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Stack, Text, 
   Box, Grid,
-  Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+  Tabs, TabList, TabPanels, Tab, TabPanel,
+  Card, CardHeader, Heading, CardBody, CardFooter } from '@chakra-ui/react';
 import LinkList from '../components/LinkList';
 import DateCounter from '../components/DateCounter';
 import Goals from '../components/Goals';
@@ -34,11 +35,13 @@ export default function Dashboard (props) {
   return (
     <Box>
       <Stack>
-        <Text fontSize='25px'>{currentTime}</Text>
+        <Text fontSize='4xl'>{currentTime}</Text>
       </Stack>
       <Grid templateColumns="repeat(2, 1fr)" gap={4}>
-        <Box gridRow="span 3" bg='tomato'>
-          <LinkList/>
+        <Box gridRow="span 3">
+          <Card>
+            <LinkList/>
+          </Card>
         </Box>
         <Box bg='red'>
           <DateCounter/>
