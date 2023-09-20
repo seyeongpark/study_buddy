@@ -1,19 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Stack, Text, Input,
-  Box, Flex,
-  Card, CardHeader, CardBody, CardFooter, Button,
-  Radio, RadioGroup } from '@chakra-ui/react';
-  
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverCloseButton,
-  FormControl, FormLabel, ButtonGroup,
-  IconButton, useDisclosure
-} from '@chakra-ui/react';
-
+import { Stack, Text, Input, Box, Flex, Card, CardHeader, CardBody, CardFooter, Button, Radio, RadioGroup } from '@chakra-ui/react';
+import { Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, FormControl, FormLabel, ButtonGroup, IconButton, useDisclosure } from '@chakra-ui/react';
 import { EditIcon } from '@chakra-ui/icons';
 
 function DateCounter() {
@@ -39,45 +26,52 @@ function DateCounter() {
   };
 
   useEffect(() => {
-    // Store inputEventName and inputDate in localStorage
-    localStorage.setItem('inputEventName', inputEventName);
-    localStorage.setItem('inputDate', inputDate);
-  }, [inputEventName, inputDate]);
-
-  useEffect(() => {
-    // Retrieve values from localStorage
+    // Set initial state values from localStorage
     const storedEventName = localStorage.getItem('inputEventName');
     const storedDate = localStorage.getItem('inputDate');
     if (storedEventName) {
-      setStoredInputEventName(storedEventName);
+      setInputEventName(storedEventName);
+      setStoredInputEventName(storedEventName); // Set the stored inputEventName as well
+    }
+    if (storedDate) {
+      setInputDate(storedDate);
     }
   }, []);
 
+  useEffect(() => {
+    // Store inputEventName and inputDate in localStorage whenever they change
+    localStorage.setItem('inputEventName', inputEventName);
+    localStorage.setItem('inputDate', inputDate);
+    calculateDateDifference();
+  }, [inputEventName, inputDate]);
+
   const calculateDateDifference = () => {
-    const currentDate = new Date();
-    const selectedDate = new Date(inputDate);
-    const timeDifference = selectedDate - currentDate;
-    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    if(inputDate) {
+      const currentDate = new Date();
+      const selectedDate = new Date(inputDate);
+      const timeDifference = selectedDate - currentDate;
+      const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-    if (counterType === 'future') {
-      if (daysDifference < 0) {
-        setResult(`Date in the past ${daysDifference * -1} day(s)`);
-      } else if (daysDifference === 0) {
-        setResult('D-Day');
-      } else {
-        setResult(`Day-${daysDifference}`);
+      if (counterType === 'future') {
+        if (daysDifference < 0) {
+          setResult(`Date in the past ${daysDifference * -1} day(s)`);
+        } else if (daysDifference === 0) {
+          setResult('D-Day');
+        } else {
+          setResult(`Day-${daysDifference}`);
+        }
+      } else if (counterType === 'ongoing') {
+        if (daysDifference < 0) {
+          setResult(`Day ${daysDifference * -1}`);
+        } else if (daysDifference === 0) {
+          setResult('Day 1');
+        } else {
+          setResult(`Date counter will start ${daysDifference} day(s) later`);
+        }
       }
-    } else if (counterType === 'ongoing') {
-      if (daysDifference < 0) {
-        setResult(`Day ${daysDifference * -1}`);
-      } else if (daysDifference === 0) {
-        setResult('Day 1');
-      } else {
-        setResult(`Date counter will start ${daysDifference} day(s) later`);
-      }
-    }
 
-    onClose();
+      onClose();
+    } 
   };
 
   return (
@@ -169,14 +163,14 @@ const Form = ({
         value={inputDate}
         onChange={handleInputChange}
       />
-      <ButtonGroup display='flex' justifyContent='flex-end'>
+      {/* <ButtonGroup display='flex' justifyContent='flex-end'>
         <Button variant='outline' onClick={onCancel}>
           Cancel
         </Button>
         <Button colorScheme='teal' onClick={calculateDateDifference}>
           Save
         </Button>
-      </ButtonGroup>
+      </ButtonGroup> */}
     </Stack>
   );
 };
