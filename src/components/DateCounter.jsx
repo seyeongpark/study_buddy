@@ -69,15 +69,13 @@ function DateCounter() {
           setResult(`Date counter will start ${daysDifference} day(s) later`);
         }
       }
-
-      onClose();
     } 
   };
 
   return (
     <>
     <CardHeader fontSize='lg' marginBottom='-10'>
-        <Text>{storedInputEventName}</Text>
+        <Text>{inputEventName}</Text>
     </CardHeader>
     <CardBody justifyContent='center'>
       <Flex align="center" justify="center">
@@ -163,14 +161,14 @@ const Form = ({
         value={inputDate}
         onChange={handleInputChange}
       />
-      {/* <ButtonGroup display='flex' justifyContent='flex-end'>
-        <Button variant='outline' onClick={onCancel}>
+      <ButtonGroup display='flex' justifyContent='flex-end'>
+        {/* <Button variant='outline' onClick={onCancel}>
           Cancel
+        </Button> */}
+        <Button colorScheme='teal' onClick={onCancel}>
+          Close
         </Button>
-        <Button colorScheme='teal' onClick={calculateDateDifference}>
-          Save
-        </Button>
-      </ButtonGroup> */}
+      </ButtonGroup>
     </Stack>
   );
 };
