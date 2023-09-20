@@ -43,7 +43,7 @@ export default function Dashboard (props) {
             <LinkList/>
           </Card>
         </Box>
-        <Box bg='red'>
+        <Box>
           <Card>
             <DateCounter/>
           </Card>
