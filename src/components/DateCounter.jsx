@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Stack, Text, Input,
+  Box, Grid, Flex, Spacer,
+  Tabs, TabList, TabPanels, Tab, TabPanel,
+  Card, CardHeader, Heading, CardBody, CardFooter, Button,
+  UnorderedList, ListItem } from '@chakra-ui/react';
 
 function DateCounter() {
   const [inputDate, setInputDate] = useState('');
@@ -67,14 +72,33 @@ function DateCounter() {
   };
 
   return (
-    <div className="App">
-      <h2>Date Counter</h2>
-      <div>
-        <label>Event Name:</label>
+    <>
+    <CardHeader fontSize='lg' marginBottom='-10'>
+        <Text>{storedInputEventName}</Text>
+    </CardHeader>
+    <CardBody justifyContent='center'>
+      <Flex align="center" justify="center">
+        <Text fontSize='5xl'> {result} </Text>
+      </Flex>
+    </CardBody>
+    <CardFooter justifyContent="flex-end" marginTop='-10'>
+      <Button
+        onClick={()=> {}}
+        colorScheme='gray'
+        _hover={{ 
+          bg: 'green',
+          color: '#fff',
+          transform: 'scale(0.98)',
+          }}
+          size='sm'
+        >
+        Change
+      </Button>
+    </CardFooter>
+
+
+      {/* <div>
         <input type="text" value={inputEventName} onChange={handleEventNameChange} />
-        <div>Stored Event Name: {storedInputEventName}</div>
-      </div>
-      <div>
         <label>Date:</label>
         <input type="date" value={inputDate} onChange={handleInputChange} />
         <br />
@@ -92,8 +116,8 @@ function DateCounter() {
       <button onClick={calculateDateDifference}>Calculate</button>
       <div>
         <p>{result}</p>
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 }
 

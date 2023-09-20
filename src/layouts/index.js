@@ -44,7 +44,9 @@ export default function Dashboard (props) {
           </Card>
         </Box>
         <Box bg='red'>
-          <DateCounter/>
+          <Card>
+            <DateCounter/>
+          </Card>
         </Box>
         <Box bg='blue'>
         <Goals/>
