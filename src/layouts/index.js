@@ -49,7 +49,9 @@ export default function Dashboard (props) {
           </Card>
         </Box>
         <Box bg='blue'>
+        <Card>
         <Goals/>
+        </Card>
         </Box>
         <Box bg='green'>
         Component4 (wish)

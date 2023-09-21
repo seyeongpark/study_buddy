@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Stack, Text, Input,
   Box, Grid, Flex, Spacer,
   Tabs, TabList, TabPanels, Tab, TabPanel,
-  Card, CardHeader, Heading, CardBody, CardFooter, Button,
+  Card, CardHeader, Heading, CardBody, CardFooter, Button, IconButton,
   UnorderedList, ListItem } from '@chakra-ui/react';
 
 import { CloseIcon } from '@chakra-ui/icons'
@@ -68,14 +68,15 @@ function LinkList() {
       {/* Link List */}
       <Tabs variant='soft-rounded' colorScheme='green'>
         <TabList>
-          <Tab>CELPIP</Tab>
+          <Tab>Study</Tab>
           <Tab>🎶</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
           <Box>
             <Stack>
-              <Input placeholder='large size' size='lg'
+              <Input 
+                size='lg'
                 type="text"
                 placeholder="Add a link"
                 value={newLink}
@@ -88,7 +89,7 @@ function LinkList() {
               {links.map((link, index) => (
                 <ListItem key={index}>
                   <Text href={link} target="_blank" fontSize='md'>{link}
-                    <Button 
+                    <IconButton 
                       onClick={() => deleteLink(index)} 
                       colorScheme='tomato'
                       color='tomato'
@@ -99,11 +100,9 @@ function LinkList() {
                       transform: 'scale(0.98)',
                       }}
                       size='sm'
-                      variant='outline'>
-                        <CloseIcon>
-                          Delete
-                        </CloseIcon>
-                    </Button>
+                      variant='outline'
+                      aria-label='Delete'
+                      icon={<CloseIcon/>}/>
                   </Text>
                 </ListItem>
               ))}
