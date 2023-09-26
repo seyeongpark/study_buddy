@@ -33,10 +33,12 @@ export default function Dashboard (props) {
   }
 
   return (
-    <Box>
-      <Stack>
-        <Text fontSize='4xl'>{currentTime}</Text>
-      </Stack>
+    <Box margin='40px'>
+      <Box>
+        <Stack marginBottom='20px'>
+          <Text fontSize='4xl'>{currentTime}</Text>
+        </Stack>
+      </Box>
       <Grid templateColumns="repeat(2, 1fr)" gap={4}>
         <Box gridRow="span 3">
           <Card>
@@ -48,14 +50,14 @@ export default function Dashboard (props) {
             <DateCounter/>
           </Card>
         </Box>
-        <Box bg='blue'>
-        <Card>
-        <Goals/>
-        </Card>
+        <Box>
+          <Card>
+            <Goals/>
+          </Card>
         </Box>
-        <Box bg='green'>
+        {/* <Box bg='green'>
         Component4 (wish)
-        </Box>
+        </Box> */}
       </Grid>
     </Box>
   );
